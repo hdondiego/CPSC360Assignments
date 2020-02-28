@@ -1,77 +1,40 @@
 #include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
 #include "book.h"
 
 int main(){
     // Hector Dondiego
-    // instantiating Book object with no parameters
-    Book b1;
-    // using setters to set values in Book b1 object
-    b1.setTitle("If You Give a Mouse a Cookie");
-    b1.setbookID(65);
+    // creating an array of Book objects called bookLibrary
+    const int ARRAY_SIZE = 5;   // defining the size of the array
+    Book bookLibrary[ARRAY_SIZE];
+    std::string inp;    // inp temporarily holds the title of the book that the user enters
+    int tempVal;
 
-    // printing out Book b1's attributes
-    std::cout << "Title: " << b1.getTitle() << std::endl;
-    std::cout << "Book ID: " << b1.getbookID() << std::endl;
-    if (b1.isCheckedOut()){
-        std::cout << "Status: This book is currently checked out." << std::endl;
-    } else {
-        std::cout << "Status: This book is currently available." << std::endl;
+    // asking the user to enter five book titles
+    // need to generate new bookID since all five Book objects
+    // have the same bookID to start with
+    for (int i = 0; i < ARRAY_SIZE; i++){
+        std::cout << "Enter a book title: ";
+        std::getline(std::cin, inp);
+        bookLibrary[i].setTitle(inp);
+        tempVal = (rand() % 1000) + 1;
+        bookLibrary[i].setbookID(tempVal);
+
     }
-    std::cout << std::endl;
 
-    // checking out Book b1 - setting checkedOut to True
-    b1.borrowBook();
+    // using the =, +, and - operator overloaded functions to all five book objects
+    bookLibrary[0] = bookLibrary[1]; // 0 1
+    bookLibrary[1] = bookLibrary[2] + bookLibrary[3]; // 1 2 3
+    bookLibrary[2] = bookLibrary[3] - bookLibrary[4]; // 2 3 4
 
-    // printing out Book b1's changed attributes
-    std::cout << "Title: " << b1.getTitle() << std::endl;
-    std::cout << "Book ID: " << b1.getbookID() << std::endl;
-    if (b1.isCheckedOut()){
-        std::cout << "Status: This book is currently checked out." << std::endl;
-    } else {
-        std::cout << "Status: This book is currently available." << std::endl;
-    }
-    std::cout << std::endl;
-
-    /*--------------------------------------------------------------------------*/
-
-    // instantiating Book object with three parameters
-    Book b2("Strange Case of Dr Jekyll and Mr Hyde", 23, true);
-
-    // printing out Book b2's attributes
-    std::cout << "Title: " << b2.getTitle() << std::endl;
-    std::cout << "Book ID: " << b2.getbookID() << std::endl;
-    if (b2.isCheckedOut()){
-        std::cout << "Status: This book is currently checked out." << std::endl;
-    } else {
-        std::cout << "Status: This book is currently available." << std::endl;
-    }
-    std::cout << std::endl;
-
-    // returning Book b2 object - setting checkedOut to False
-    b2.returnBook();
-
-    // printing out Book b2's changed attributes
-    std::cout << "Title: " << b2.getTitle() << std::endl;
-    std::cout << "Book ID: " << b2.getbookID() << std::endl;
-    if (b2.isCheckedOut()){
-        std::cout << "Status: This book is currently checked out." << std::endl;
-    } else {
-        std::cout << "Status: This book is currently available." << std::endl;
-    }
-    std::cout << std::endl;
-
-    /*--------------------------------------------------------------------------*/
-
-    // instantiating Book object with copy constructor, passing in Book b1 object
-    Book b3(b1);
-
-    // printing out Book b3's attributes
-    std::cout << "Title: " << b3.getTitle() << std::endl;
-    std::cout << "Book ID: " << b3.getbookID() << std::endl;
-    if (b3.isCheckedOut()){
-        std::cout << "Status: This book is currently checked out." << std::endl;
-    } else {
-        std::cout << "Status: This book is currently available." << std::endl;
+    // printing out each Book object's Title and Book ID
+    for (int j = 0; j < 5; j++){
+        std::cout << "Book " << j + 1 << std::endl;
+        std::cout << "Title: " << bookLibrary[j].getTitle() << std::endl;
+        std::cout << "Book ID: " << bookLibrary[j].getbookID() << std::endl;
+        std::cout << std::endl;
     }
     return 0;
 }

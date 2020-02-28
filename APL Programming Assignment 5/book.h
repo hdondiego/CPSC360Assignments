@@ -1,5 +1,7 @@
 #include <iostream>
+#include <ctime>
 #include <string>
+#include <cstdlib>
 
 #ifndef BOOK_H
 #define BOOK_H
@@ -23,10 +25,8 @@ class Book{
         void borrowBook();
         void returnBook();
 
+        // these constructors are in-line functions
         /*
-        In-line constructor functions were removed and replaced with
-        prototype constructor functions. Constructor functions
-        were added to book.cpp file.
         This, in a way, does not follow good practice.
         In bookmain.cpp, each time a variable is instantiated,
         imagine copying and pasting the content in the constructors
@@ -36,14 +36,26 @@ class Book{
         functions here and defining what the functions should
         do in the book.cpp file.
         */
+        // default constructor - no parameter
+        Book(){
+            Title = "No Title";
+            srand(time(0));
+            bookID = (rand() % 1000) + 1;
+            checkedOut = false;
+        }
 
-        Book(); // default constructor - no parameter
-        Book(std::string name, int id, bool checked=false); // 2- or 3- parameter constructor
-        Book(const Book &bookObj);  // copy constructor
+        // 2- or 3- parameter constructor
+        Book(std::string name, int id, bool checked=false){
+            Title = name;
+            bookID = id;
+            checkedOut = checked;
+        }
 
-        // prototype functions for the =, +, and - operator overloads
-        void operator=(const Book &right);
-        Book operator+(const Book &right);
-        Book operator-(Book &right);
+        // copy constructor
+        Book(const Book &bookObj){
+            Title = bookObj.Title;
+            bookID = bookObj.bookID;
+            checkedOut = bookObj.checkedOut;
+        }
 };
 #endif // BOOK_H
