@@ -1,0 +1,70 @@
+<script type="text/javascript">
+	// Hector Dondiego
+	// asks for input to analyze
+	let str = prompt("Enter a string: ");
+
+	let start = 0; // general starting position of a word
+	let startLong = 0; // starting pos of the longest E word
+	let endLong = 0; // ending pos of the longest E word
+	let longestWord = 0; // the length of the longest word
+	let numEWords = 0; // the total number of words containing E
+	let numChar = 0; // the number of characters in the longest E word
+	let len = 0; // a temporary value holder for the length of a word
+	let containsE = false; // states if the word being evaluated has an E
+
+	// analyzing each character in the String str
+	for (let i = 0; i < str.length; i++){
+		// checks to see if for-loop notices a lower or upper case E
+		if ((str[i] == "e") || (str[i] == "E")){
+			containsE = true;	// if so, state that there is an E in the word
+		}
+
+		// if there is a space, it indicates that there is a word
+		if (str[i] == " "){
+			// checking if the word has an E
+			if (containsE){
+				// calculating temp length of current word
+				len = i - start;
+				if (longestWord <= len){
+					// if the current word with an E is
+					// longer than the longest E word, replace it
+					longestWord = len;
+					startLong = start; // recorded to get the starting letter index
+					endLong = i;	// recorded to get the ending letter index
+				}
+				start = i + 1; // change the new starting word location to the position after space
+				numEWords++; // increase E word count by 1 because the current word has E
+				containsE = false; // starting process over with determining if word has E
+			} else {
+				// word does not contain E, set start to the next position for next word
+				start = i + 1;
+			}
+		}
+	}
+
+	// conceptually, since the last word in String doesn't end with a space
+	// must analyze the last word
+	if (containsE){
+		len = str.length - start;
+		if (longestWord <= len){
+			longestWord = len;
+			startLong = start; // recorded to get the starting letter index
+			endLong = str.length; //+ 1; // recorded to get the ending letter index
+			// endLong is the str length + 1 because in the original method, the space is
+			// included with saying that it is the end and when the for-loop is
+			// used to generate the word, it won't also read the blank space.
+			// This line mimicks the same way but going outside the actual size of the string
+		}
+		numEWords++; // increase E word count by 1 because the current word has E
+	}
+
+	// generating the longest E word
+	let word = "";
+	// starts with the first character in the long E word and reaches until the ending of the long E word
+	for (let j = startLong; j < endLong; j++){
+		word += str[j];
+	}
+
+	// outputting the number of E words, the longest E word, and the number of characters in the longest E word
+	alert(`Number of words containing E: ${numEWords}\nLongest word containing E: ${word}\nNumber of characters in long E word: ${longestWord}`);
+</script>
